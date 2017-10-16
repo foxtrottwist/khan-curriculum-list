@@ -1,21 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = styled.a`
+const Button = styled.div`
   background: ${({ selected, item }) => (selected === item ? '#4CAF50' : '#fff')};
   border: 0.2em solid #c4f0c0;
-  border-radius: 35%;
+  border-radius: 3px;
   color: black;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 0.9em;
   cursor: pointer;
-  margin: 1%;
-  padding: 0.5%;
-  height: 2em;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  height: 3.25em;
   width: 10em;
+  overflow: hidden;
   border-radius: 2%;
+
+  p {
+    margin: auto;
+  }
+`;
+
+const BrowserBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  border-bottom: 0.1em solid #4caf50;
 `;
 
 const Topics = ({
@@ -23,7 +36,7 @@ const Topics = ({
 }) => {
   if (selectedSubject === 'Math') {
     return (
-      <div>
+      <BrowserBox>
         {topics
           .filter((title) => {
             const topic = title.standalone_title;
@@ -45,14 +58,14 @@ const Topics = ({
               selected={selectedTopic}
               onClick={onBrowse.bind(null, topic.node_slug)}
             >
-              {topic.standalone_title}
+              <p>{topic.standalone_title}</p>
             </Button>
           ))}
-      </div>
+      </BrowserBox>
     );
   }
   return (
-    <div>
+    <BrowserBox>
       {topics.map(topic => (
         <Button
           key={topic.internal_id}
@@ -60,10 +73,10 @@ const Topics = ({
           selected={selectedTopic}
           onClick={onBrowse.bind(null, topic.node_slug)}
         >
-          {topic.standalone_title}
+          <p>{topic.standalone_title}</p>
         </Button>
       ))}
-    </div>
+    </BrowserBox>
   );
 };
 

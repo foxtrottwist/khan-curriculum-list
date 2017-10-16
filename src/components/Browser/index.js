@@ -22,7 +22,14 @@ const Browser = ({
 }) => (
   <BrowserWrapper>
     <Subjects subjects={subjects} onSelect={onSelect} selectedSubject={selectedSubject} />
-    {!topics ? null : <Topics topics={topics} selectedTopic={selectedTopic} onBrowse={onBrowse} />}
+    {!topics ? null : (
+      <Topics
+        topics={topics}
+        selectedTopic={selectedTopic}
+        selectedSubject={selectedSubject}
+        onBrowse={onBrowse}
+      />
+    )}
     {!courses ? null : <Courses courses={courses} onAdd={onAdd} />}
   </BrowserWrapper>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
-  background-color: #349046;
+  background-color: #4caf50;
   height: 5%;
   padding: 1%;
   color: white;

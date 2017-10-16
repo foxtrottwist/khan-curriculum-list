@@ -1,6 +1,7 @@
 import React from 'react';
-import Course from './Course';
 import styled from 'styled-components';
+
+import Course from './Course';
 
 const ListBox = styled.div`
   background-color: #c4f0c0;
@@ -9,9 +10,10 @@ const ListBox = styled.div`
   max-height: 400px;
   min-height: 400px;
   heigth: 100%;
-  border: solid black;
+  border: 0.1em solid #4caf50;
   overflow: auto;
   padding: 0.3%;
+  border-radius: 2%;
 
   > p {
     font-size: 0.9em;

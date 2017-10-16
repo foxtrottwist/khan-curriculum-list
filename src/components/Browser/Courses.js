@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = styled.a`
+const Button = styled.div`
   background: #fff;
   border: 0.2em solid #c4f0c0;
   border-radius: 35%;
@@ -11,11 +11,16 @@ const Button = styled.a`
   display: inline-block;
   font-size: 0.9em;
   cursor: pointer;
-  margin: 1%;
-  padding: 0.5%;
-  height: 2em;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  height: 3.25em;
   width: 10em;
+  overflow: hidden;
   border-radius: 2%;
+
+  p {
+    margin: auto;
+  }
 
   :hover {
     transform: scale(1.1);
@@ -27,14 +32,21 @@ const Button = styled.a`
   }
 `;
 
+const BrowserBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+`;
+
 const Courses = ({ courses, onAdd }) => (
-  <div>
+  <BrowserBox>
     {courses.map(course => (
       <Button key={course.internal_id} onClick={onAdd.bind(null, course)}>
-        {course.standalone_title}
+        <p>{course.standalone_title}</p>
       </Button>
     ))}
-  </div>
+  </BrowserBox>
 );
 
 export default Courses;
