@@ -48,8 +48,11 @@ class App extends Component {
   }
 
   getKhanTopics(endPoint) {
+    // Checks the index of the selected subject in the SUBJECT array
     const resourceIndex = SUBJECTS.indexOf(endPoint);
 
+    // Then uses the retured index value stored in resourceIndex,
+    // to access the proper value in the RESOURCE array
     axios
       .get(BASE_URL + RESOURCES[resourceIndex])
       .then((response) => {
