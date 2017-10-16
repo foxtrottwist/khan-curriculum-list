@@ -13,7 +13,7 @@ const AppWrapper = styled.div`
   width: 100%;
 `;
 
-const CurriculumWrapper = styled.main`
+const CurriculumWrapper = styled.div`
   width: 100%;
   margin-bottom: 20px;
   display: flex;
@@ -37,16 +37,6 @@ class App extends Component {
     this.removeCourse = this.removeCourse.bind(this);
   }
 
-  updateSubject(subject) {
-    this.setState(() => ({
-      selectedSubject: subject,
-      topics: null,
-      courses: null,
-    }));
-
-    this.getKhanTopics(subject);
-  }
-
   getKhanTopics(endPoint) {
     // Checks the index of the selected subject in the SUBJECT array
     const resourceIndex = SUBJECTS.indexOf(endPoint);
@@ -65,15 +55,6 @@ class App extends Component {
       });
   }
 
-  browseKhan(topic) {
-    this.setState(() => ({
-      selectedTopic: topic,
-      course: null,
-    }));
-
-    this.getKhanCourses(topic);
-  }
-
   getKhanCourses(endPoint) {
     axios
       .get(BASE_URL + endPoint)
@@ -85,6 +66,25 @@ class App extends Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  browseKhan(topic) {
+    this.setState(() => ({
+      selectedTopic: topic,
+      course: null,
+    }));
+
+    this.getKhanCourses(topic);
+  }
+
+  updateSubject(subject) {
+    this.setState(() => ({
+      selectedSubject: subject,
+      topics: null,
+      courses: null,
+    }));
+
+    this.getKhanTopics(subject);
   }
 
   addCourse(course) {
