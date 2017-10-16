@@ -26,7 +26,7 @@ const Browser = ({
       <Topics
         topics={topics}
         selectedTopic={selectedTopic}
-        selectedSubject={selectedSubject}
+        selectedSubject={selectedSubject} // selectedSubject passed to filter math topic results
         onBrowse={onBrowse}
       />
     )}

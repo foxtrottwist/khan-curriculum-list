@@ -37,6 +37,7 @@ const BrowserBox = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 2em;
+  border-bottom: 0.1em solid #4caf50;
 `;
 
 const Courses = ({ courses, onAdd }) => (
