@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = styled.div`
+const Button = styled.button`
   background: ${({ selected, item }) => (selected === item ? '#4CAF50' : '#fff')};
   border: 0.2em solid #c4f0c0;
   border-radius: 3px;
@@ -13,12 +13,11 @@ const Button = styled.div`
   cursor: pointer;
   margin: 0.5em;
   padding: 0.25em 1em;
-  height: 3.25em;
+  height: ${props => (props.height ? props.height : '3.5em')};
   width: 10em;
-  overflow: hidden;
   border-radius: 2%;
 
-  p {
+  span {
     margin: auto;
   }
 `;
@@ -53,6 +52,8 @@ const Topics = ({
           })
           .map(topic => (
             <Button
+              type="button"
+              height="4.5em"
               key={topic.internal_id}
               item={topic.node_slug}
               selected={selectedTopic}
@@ -68,12 +69,14 @@ const Topics = ({
     <BrowserBox>
       {topics.map(topic => (
         <Button
+          type="button"
+          height="4.5em"
           key={topic.internal_id}
           item={topic.node_slug}
           selected={selectedTopic}
           onClick={onBrowse.bind(null, topic.node_slug)}
         >
-          <p>{topic.standalone_title}</p>
+          <span>{topic.standalone_title}</span>
         </Button>
       ))}
     </BrowserBox>

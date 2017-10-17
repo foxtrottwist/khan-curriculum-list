@@ -92,7 +92,7 @@ class App extends Component {
       () => {
         const curriculum = !this.state.curriculumList
           ? [course]
-          : this.state.curriculumList.concat([course]);
+          : this.state.curriculumList.filter(element => element !== course).concat([course]);
         return {
           selectedCourse: course.standalone_title,
           curriculumList: curriculum,

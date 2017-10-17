@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = styled.div`
+const Button = styled.button`
   background: #fff;
   border: 0.2em solid #c4f0c0;
   border-radius: 35%;
@@ -13,12 +13,12 @@ const Button = styled.div`
   cursor: pointer;
   margin: 0.5em;
   padding: 0.25em 1em;
-  height: 3.25em;
+  height: ${props => (props.height ? props.height : '3.5em')};
+  height: 5.5em;
   width: 10em;
-  overflow: hidden;
   border-radius: 2%;
 
-  p {
+  span {
     margin: auto;
   }
 
@@ -43,8 +43,13 @@ const BrowserBox = styled.div`
 const Courses = ({ courses, onAdd }) => (
   <BrowserBox>
     {courses.map(course => (
-      <Button key={course.internal_id} onClick={onAdd.bind(null, course)}>
-        <p>{course.standalone_title}</p>
+      <Button
+        type="button"
+        height="5.5em"
+        key={course.internal_id}
+        onClick={onAdd.bind(null, course)}
+      >
+        <span>{course.standalone_title}</span>
       </Button>
     ))}
   </BrowserBox>
