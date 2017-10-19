@@ -28,6 +28,7 @@ class App extends Component {
       topics: null,
       selectedTopic: '',
       courses: null,
+      // eslint-disable-next-line
       curriculumList: JSON.parse(localStorage.getItem('curriculumList')) || null,
     };
 
@@ -51,6 +52,7 @@ class App extends Component {
         }));
       })
       .catch((error) => {
+        // eslint-disable-next-line
         console.log(error);
       });
   }
@@ -64,6 +66,7 @@ class App extends Component {
         }));
       })
       .catch((error) => {
+        // eslint-disable-next-line
         console.log(error);
       });
   }
@@ -99,6 +102,7 @@ class App extends Component {
         };
       },
       () => {
+        // eslint-disable-next-line
         localStorage.setItem('curriculumList', JSON.stringify(this.state.curriculumList));
       },
     );
@@ -116,6 +120,7 @@ class App extends Component {
         };
       },
       () => {
+        // eslint-disable-next-line
         localStorage.setItem('curriculumList', JSON.stringify(this.state.curriculumList));
       },
     );
