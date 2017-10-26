@@ -5,8 +5,8 @@ const HeaderWrapper = styled.header`
   background-color: #4caf50;
   height: 5%;
   padding: 1%;
-  color: #c4f0c0;
-  margin-bottom: 2%;
+  color: #d1fad7;
+  margin-bottom: 0.5%;
 `;
 
 const Heading = styled.h2`text-align: center;`;

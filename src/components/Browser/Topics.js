@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background: ${({ selected, item }) => (selected === item ? '#c4f0c0' : '#fff')};
+  background: ${({ selected, item }) => (selected === item ? '#d1fad7' : '#fff')};
   border: 0.2em solid #4caf50;
   border-radius: 3px;
   color: #4caf50;
