@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   background: #fff;
-  border: 0.2em solid #c4f0c0;
+  border: 0.2em solid #4caf50;
   border-radius: 35%;
-  color: black;
+  color: #4caf50;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -28,7 +28,7 @@ const Button = styled.button`
 
   :active {
     transform: scale(1.2);
-    background-color: #349046;
+    background-color: #c4f0c0;
   }
 `;
 

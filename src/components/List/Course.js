@@ -25,7 +25,7 @@ const CourseAction = styled.li`
 
 const CourseLink = styled.a`
   text-decoration: none;
-  color: black;
+  color: #4caf50;
 
   :hover {
     color: #349046;

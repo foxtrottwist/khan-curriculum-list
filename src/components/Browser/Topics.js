@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background: ${({ selected, item }) => (selected === item ? '#4CAF50' : '#fff')};
-  border: 0.2em solid #c4f0c0;
+  background: ${({ selected, item }) => (selected === item ? '#c4f0c0' : '#fff')};
+  border: 0.2em solid #4caf50;
   border-radius: 3px;
-  color: black;
+  color: #4caf50;
   text-align: center;
   text-decoration: none;
   display: inline-block;

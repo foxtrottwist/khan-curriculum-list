@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import Course from './Course';
 
 const ListBox = styled.div`
-  background-color: #c4f0c0;
+  color: #4caf50;
+  border: 0.1em solid #4caf50;
   margin-top: 1.5em;
   width: 25%;
   max-height: 400px;
   min-height: 400px;
   heigth: 100%;
-  border: 0.1em solid #4caf50;
   overflow: auto;
   padding: 0.3%;
   border-radius: 2%;
