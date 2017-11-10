@@ -16,6 +16,7 @@ const Button = styled.button`
   height: ${props => (props.height ? props.height : '3.5em')};
   width: 10em;
   border-radius: 2%;
+  box-shadow: 1.5px 1.5px 6px #ccc;
 
   span {
     margin: auto;

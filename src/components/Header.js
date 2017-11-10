@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
   background-color: #4caf50;
-  height: 5%;
+  height: 8rem;
   padding: 1%;
   color: #d1fad7;
   margin-bottom: 0.5%;

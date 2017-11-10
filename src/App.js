@@ -7,14 +7,9 @@ import List from './components/List';
 import Browser from './components/Browser';
 import { BASE_URL, SUBJECTS, RESOURCES } from './utils/constants';
 
-const AppWrapper = styled.div`
+const CurriculumWrapper = styled.div`
   margin: 0 auto;
   max-width: 1200px;
-  width: 100%;
-`;
-
-const CurriculumWrapper = styled.div`
-  width: 100%;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
@@ -128,7 +123,7 @@ class App extends Component {
 
   render() {
     return (
-      <AppWrapper>
+      <div>
         <Header />
         <CurriculumWrapper>
           <List curriculumList={this.state.curriculumList} onRemoval={this.removeCourse} />
@@ -143,7 +138,7 @@ class App extends Component {
             onAdd={this.addCourse}
           />
         </CurriculumWrapper>
-      </AppWrapper>
+      </div>
     );
   }
 }

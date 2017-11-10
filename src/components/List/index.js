@@ -14,6 +14,8 @@ const ListBox = styled.div`
   overflow: auto;
   padding: 0.3%;
   border-radius: 2%;
+  background-color: #fff;
+  box-shadow: 2px 3px 6px #ccc;
 `;
 
 const Heading = styled.h3`text-align: center;`;
