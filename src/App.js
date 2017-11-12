@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import Title from './components/Title';
 import Header from './components/Header';
 import List from './components/List';
 import Browser from './components/Browser';
@@ -124,6 +125,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Title />
         <Header />
         <CurriculumWrapper>
           <List curriculumList={this.state.curriculumList} onRemoval={this.removeCourse} />
