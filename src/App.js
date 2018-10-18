@@ -82,9 +82,7 @@ class App extends Component {
       ({ curriculumList }) => {
         const curriculum = !curriculumList
           ? [course]
-          : curriculumList
-              .filter(element => element !== course)
-              .concat([course])
+          : [...new Set([...curriculumList, course])] // Array deduplication
         return {
           selectedCourse: course.standalone_title,
           curriculumList: curriculum,
