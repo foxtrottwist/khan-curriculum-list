@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const Button = styled.button`
-  background: ${({ selected, item }) => (selected === item ? '#d1fad7' : '#fff')};
+  background: ${({ selected, item }) =>
+    selected === item ? '#d1fad7' : '#fff'};
   border: 0.2em solid #4caf50;
   border-radius: 3px;
   color: #4caf50;
@@ -21,7 +22,7 @@ const Button = styled.button`
   span {
     margin: auto;
   }
-`;
+`
 
 const BrowserBox = styled.div`
   display: flex;
@@ -29,17 +30,15 @@ const BrowserBox = styled.div`
   flex-wrap: wrap;
   margin-bottom: 2em;
   border-bottom: 0.1em solid #4caf50;
-`;
+`
 
-const Topics = ({
-  selectedSubject, topics, onBrowse, selectedTopic,
-}) => {
+const Topics = ({ selectedSubject, topics, onBrowse, selectedTopic }) => {
   if (selectedSubject === 'Math') {
     return (
       <BrowserBox>
         {topics
-          .filter((title) => {
-            const topic = title.standalone_title;
+          .filter(title => {
+            const topic = title.standalone_title
             return (
               topic === '1st grade' ||
               topic === '2nd grade' ||
@@ -49,7 +48,7 @@ const Topics = ({
               topic === '6th grade' ||
               topic === '7th grade' ||
               topic === '8th grade'
-            );
+            )
           })
           .map(topic => (
             <Button
@@ -64,7 +63,7 @@ const Topics = ({
             </Button>
           ))}
       </BrowserBox>
-    );
+    )
   }
   return (
     <BrowserBox>
@@ -75,13 +74,13 @@ const Topics = ({
           key={topic.internal_id}
           item={topic.node_slug}
           selected={selectedTopic}
-          onClick={onBrowse.bind(null, topic.node_slug)}
+          onClick={() => onBrowse(topic.node_slug)}
         >
           <span>{topic.standalone_title}</span>
         </Button>
       ))}
     </BrowserBox>
-  );
-};
+  )
+}
 
-export default Topics;
+export default Topics

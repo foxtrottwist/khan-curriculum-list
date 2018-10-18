@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const Button = styled.button`
-  background: ${({ selected, item }) => (selected === item ? '#d1fad7' : '#fff')};
+  background: ${({ selected, item }) =>
+    selected === item ? '#d1fad7' : '#fff'};
   border: 0.2em solid #4caf50;
   border-radius: 3px;
   color: #4caf50;
@@ -21,7 +22,7 @@ const Button = styled.button`
   span {
     margin: auto;
   }
-`;
+`
 
 const BrowserBox = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const BrowserBox = styled.div`
   flex-wrap: wrap;
   margin-bottom: 2em;
   border-bottom: 0.1em solid #4caf50;
-`;
+`
 
 const Subjects = ({ subjects, onSelect, selectedSubject }) => (
   <BrowserBox>
@@ -39,12 +40,12 @@ const Subjects = ({ subjects, onSelect, selectedSubject }) => (
         key={index}
         selected={selectedSubject}
         item={subject}
-        onClick={onSelect.bind(null, subject)}
+        onClick={() => onSelect(subject)}
       >
         <span>{subject}</span>
       </Button>
     ))}
   </BrowserBox>
-);
+)
 
-export default Subjects;
+export default Subjects

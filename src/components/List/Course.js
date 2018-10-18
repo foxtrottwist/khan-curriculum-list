@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const AList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-`;
+`
 
 const CourseItem = styled.li`
   text-align: left;
   margin-left: 5%;
   margin-top: 3%;
-`;
+`
 
 const CourseAction = styled.li`
   font-size: 0.9em;
@@ -21,7 +21,7 @@ const CourseAction = styled.li`
   :hover {
     color: #349046;
   }
-`;
+`
 
 const CourseLink = styled.a`
   text-decoration: none;
@@ -30,7 +30,7 @@ const CourseLink = styled.a`
   :hover {
     color: #349046;
   }
-`;
+`
 
 const Course = ({ courses, onRemoval }) => (
   <AList>
@@ -39,15 +39,21 @@ const Course = ({ courses, onRemoval }) => (
         {course.standalone_title}
         <ul style={{ listStyle: 'none' }}>
           <CourseAction>
-            <CourseLink href={course.url} rel="noreferrer noopener" target="_blank">
+            <CourseLink
+              href={course.url}
+              rel="noreferrer noopener"
+              target="_blank"
+            >
               Go to course &rarr;
             </CourseLink>
           </CourseAction>
-          <CourseAction onClick={onRemoval.bind(null, course)}>Remove course</CourseAction>
+          <CourseAction onClick={() => onRemoval(course)}>
+            Remove course
+          </CourseAction>
         </ul>
       </CourseItem>
     ))}
   </AList>
-);
+)
 
-export default Course;
+export default Course

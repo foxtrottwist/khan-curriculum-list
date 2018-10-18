@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import axios from 'axios'
 
-import Title from './components/Title';
-import Header from './components/Header';
-import List from './components/List';
-import Browser from './components/Browser';
-import { BASE_URL, SUBJECTS, RESOURCES } from './utils/constants';
+import Title from './components/Title'
+import Header from './components/Header'
+import List from './components/List'
+import Browser from './components/Browser'
+import { BASE_URL, SUBJECTS, RESOURCES } from './utils/constants'
 
 const CurriculumWrapper = styled.div`
   margin: 0 auto;
@@ -14,112 +14,109 @@ const CurriculumWrapper = styled.div`
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
-`;
+`
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedSubject: '',
-      topics: null,
-      selectedTopic: '',
-      courses: null,
-      // eslint-disable-next-line
-      curriculumList: JSON.parse(localStorage.getItem('curriculumList')) || null,
-    };
-
-    this.updateSubject = this.updateSubject.bind(this);
-    this.browseKhan = this.browseKhan.bind(this);
-    this.addCourse = this.addCourse.bind(this);
-    this.removeCourse = this.removeCourse.bind(this);
+  state = {
+    selectedSubject: '',
+    topics: null,
+    selectedTopic: '',
+    courses: null,
+    curriculumList: JSON.parse(localStorage.getItem('curriculumList')) || null,
   }
 
-  getKhanTopics(endPoint) {
+  getKhanTopics = endPoint => {
     // Checks the index of the selected subject in the SUBJECT array
-    const resourceIndex = SUBJECTS.indexOf(endPoint);
+    const resourceIndex = SUBJECTS.indexOf(endPoint)
 
     // Then uses the retured index value stored in resourceIndex,
     // to access the proper value in the RESOURCE array
     axios
       .get(BASE_URL + RESOURCES[resourceIndex])
-      .then((response) => {
+      .then(response => {
         this.setState(() => ({
           topics: response.data.children,
-        }));
+        }))
       })
-      .catch((error) => {
+      .catch(error => {
         // eslint-disable-next-line
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
-  getKhanCourses(endPoint) {
+  getKhanCourses = endPoint => {
     axios
       .get(BASE_URL + endPoint)
-      .then((response) => {
+      .then(response => {
         this.setState(() => ({
           courses: response.data.children,
-        }));
+        }))
       })
-      .catch((error) => {
+      .catch(error => {
         // eslint-disable-next-line
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
-  browseKhan(topic) {
-    this.setState(() => ({
+  browseKhan = topic => {
+    this.setState({
       selectedTopic: topic,
       course: null,
-    }));
+    })
 
-    this.getKhanCourses(topic);
+    this.getKhanCourses(topic)
   }
 
-  updateSubject(subject) {
-    this.setState(() => ({
+  updateSubject = subject => {
+    this.setState({
       selectedSubject: subject,
       topics: null,
       courses: null,
-    }));
+    })
 
-    this.getKhanTopics(subject);
+    this.getKhanTopics(subject)
   }
 
-  addCourse(course) {
+  addCourse = course => {
     this.setState(
-      () => {
-        const curriculum = !this.state.curriculumList
+      ({ curriculumList }) => {
+        const curriculum = !curriculumList
           ? [course]
-          : this.state.curriculumList.filter(element => element !== course).concat([course]);
+          : curriculumList
+              .filter(element => element !== course)
+              .concat([course])
         return {
           selectedCourse: course.standalone_title,
           curriculumList: curriculum,
-        };
+        }
       },
       () => {
-        // eslint-disable-next-line
-        localStorage.setItem('curriculumList', JSON.stringify(this.state.curriculumList));
+        localStorage.setItem(
+          'curriculumList',
+          JSON.stringify(this.state.curriculumList),
+        )
       },
-    );
+    )
   }
 
-  removeCourse(course) {
+  removeCourse = course => {
     this.setState(
-      () => {
+      ({ curriculumList }) => {
         const curriculum =
-          this.state.curriculumList.length === 1
+          curriculumList.length === 1
             ? null
-            : this.state.curriculumList.filter(element => element !== course);
+            : curriculumList.filter(element => element !== course)
         return {
           curriculumList: curriculum,
-        };
+        }
       },
       () => {
-        // eslint-disable-next-line
-        localStorage.setItem('curriculumList', JSON.stringify(this.state.curriculumList));
+        localStorage.setItem(
+          'curriculumList',
+          JSON.stringify(this.state.curriculumList),
+        )
       },
-    );
+    )
   }
 
   render() {
@@ -128,7 +125,10 @@ class App extends Component {
         <Title />
         <Header />
         <CurriculumWrapper>
-          <List curriculumList={this.state.curriculumList} onRemoval={this.removeCourse} />
+          <List
+            curriculumList={this.state.curriculumList}
+            onRemoval={this.removeCourse}
+          />
           <Browser
             subjects={SUBJECTS}
             selectedSubject={this.state.selectedSubject}
@@ -141,8 +141,8 @@ class App extends Component {
           />
         </CurriculumWrapper>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const Button = styled.button`
   background: #fff;
@@ -31,7 +31,7 @@ const Button = styled.button`
     transform: scale(1.2);
     background-color: #d1fad7;
   }
-`;
+`
 
 const BrowserBox = styled.div`
   display: flex;
@@ -39,7 +39,7 @@ const BrowserBox = styled.div`
   flex-wrap: wrap;
   margin-bottom: 2em;
   border-bottom: 0.1em solid #4caf50;
-`;
+`
 
 const Courses = ({ courses, onAdd }) => (
   <BrowserBox>
@@ -48,12 +48,12 @@ const Courses = ({ courses, onAdd }) => (
         type="button"
         height="5.5em"
         key={course.internal_id}
-        onClick={onAdd.bind(null, course)}
+        onClick={() => onAdd(course)}
       >
         <span>{course.standalone_title}</span>
       </Button>
     ))}
   </BrowserBox>
-);
+)
 
-export default Courses;
+export default Courses
