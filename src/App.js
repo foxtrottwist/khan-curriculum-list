@@ -34,9 +34,9 @@ class App extends Component {
     axios
       .get(BASE_URL + RESOURCES[resourceIndex])
       .then(response => {
-        this.setState(() => ({
+        this.setState({
           topics: response.data.children,
-        }))
+        })
       })
       .catch(error => {
         // eslint-disable-next-line
@@ -48,9 +48,9 @@ class App extends Component {
     axios
       .get(BASE_URL + endPoint)
       .then(response => {
-        this.setState(() => ({
+        this.setState({
           courses: response.data.children,
-        }))
+        })
       })
       .catch(error => {
         // eslint-disable-next-line
@@ -59,22 +59,24 @@ class App extends Component {
   }
 
   browseKhan = topic => {
-    this.setState({
-      selectedTopic: topic,
-      course: null,
-    })
-
-    this.getKhanCourses(topic)
+    this.setState(
+      {
+        selectedTopic: topic,
+        course: null,
+      },
+      () => this.getKhanCourses(topic),
+    )
   }
 
   updateSubject = subject => {
-    this.setState({
-      selectedSubject: subject,
-      topics: null,
-      courses: null,
-    })
-
-    this.getKhanTopics(subject)
+    this.setState(
+      {
+        selectedSubject: subject,
+        topics: null,
+        courses: null,
+      },
+      () => this.getKhanTopics(subject),
+    )
   }
 
   addCourse = course => {
