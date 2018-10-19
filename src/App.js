@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
+import { loadState, saveState } from './services/storage'
+
 import List from './components/List'
 import Browser from './components/Browser'
 
@@ -42,7 +44,7 @@ export default class App extends Component {
     topics: null,
     selectedTopic: '',
     courses: null,
-    curriculumList: JSON.parse(localStorage.getItem('curriculumList')) || null,
+    curriculumList: loadState(),
   }
 
   getKhanTopics = endPoint => {
@@ -111,10 +113,7 @@ export default class App extends Component {
         }
       },
       () => {
-        localStorage.setItem(
-          'curriculumList',
-          JSON.stringify(this.state.curriculumList),
-        )
+        saveState(this.state.curriculumList)
       },
     )
   }
