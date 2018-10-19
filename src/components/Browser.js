@@ -10,7 +10,7 @@ export default function Browser(props) {
   const {
     selectedSubject,
     topics,
-    onBrowse,
+    onSelectTopic,
     selectedTopic,
     courses,
     onAdd,
@@ -23,7 +23,7 @@ export default function Browser(props) {
           topics={topics}
           selectedTopic={selectedTopic}
           selectedSubject={selectedSubject} // selectedSubject passed to filter math topic results
-          onBrowse={onBrowse}
+          onSelectTopic={onSelectTopic}
         />
       )}
       {!courses ? null : <Courses courses={courses} onAdd={onAdd} />}
@@ -62,7 +62,7 @@ const TopicsWrapper = styled.div`
   border-bottom: 0.1em solid #4caf50;
 `
 
-function Topics({ selectedSubject, topics, onBrowse, selectedTopic }) {
+function Topics({ selectedSubject, topics, onSelectTopic, selectedTopic }) {
   if (selectedSubject === 'Math') {
     return (
       <TopicsWrapper>
@@ -87,7 +87,7 @@ function Topics({ selectedSubject, topics, onBrowse, selectedTopic }) {
               key={topic.internal_id}
               item={topic.node_slug}
               selected={selectedTopic}
-              onClick={() => onBrowse(topic.node_slug)}
+              onClick={() => onSelectTopic(topic.node_slug)}
             >
               <p>{topic.standalone_title}</p>
             </TopicsButton>
@@ -104,7 +104,7 @@ function Topics({ selectedSubject, topics, onBrowse, selectedTopic }) {
           key={topic.internal_id}
           item={topic.node_slug}
           selected={selectedTopic}
-          onClick={() => onBrowse(topic.node_slug)}
+          onClick={() => onSelectTopic(topic.node_slug)}
         >
           <span>{topic.standalone_title}</span>
         </TopicsButton>

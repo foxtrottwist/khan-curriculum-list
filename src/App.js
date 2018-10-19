@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 
 import { loadState, saveState } from './services/storage'
+import { get } from './services/api'
 
 import List from './components/List'
 import Browser from './components/Browser'
 
-const BASE_URL = 'https://www.khanacademy.org/api/v1/topic/'
 const SUBJECTS = [
   'Math',
   'Science',
@@ -15,7 +14,7 @@ const SUBJECTS = [
   'Arts and Humanities',
   'Economics and Finance',
 ]
-const RESOURCES = [
+const SUBJECT_RESOURCES = [
   'math',
   'science',
   'computing',
@@ -47,57 +46,40 @@ export default class App extends Component {
     curriculumList: loadState(),
   }
 
-  getKhanTopics = endPoint => {
-    // Checks the index of the selected subject in the SUBJECT array
-    const resourceIndex = SUBJECTS.indexOf(endPoint)
-
-    // Then uses the retured index value stored in resourceIndex,
-    // to access the proper value in the RESOURCE array
-    axios
-      .get(BASE_URL + RESOURCES[resourceIndex])
-      .then(response => {
-        this.setState({
-          topics: response.data.children,
-        })
-      })
-      .catch(error => {
-        // eslint-disable-next-line
-        console.log(error)
-      })
-  }
-
-  getKhanCourses = endPoint => {
-    axios
-      .get(BASE_URL + endPoint)
-      .then(response => {
-        this.setState({
-          courses: response.data.children,
-        })
-      })
-      .catch(error => {
-        // eslint-disable-next-line
-        console.log(error)
-      })
-  }
-
-  browseKhan = topic => {
+  selectTopic = topic => {
     this.setState(
       {
         selectedTopic: topic,
         course: null,
       },
-      () => this.getKhanCourses(topic),
+      () => {
+        get(topic)
+          .then(response =>
+            this.setState({
+              courses: response.data.children,
+            }),
+          )
+          .catch(error => console.log(error))
+      },
     )
   }
 
-  updateSubject = subject => {
+  selectSubject = subject => {
     this.setState(
       {
         selectedSubject: subject,
         topics: null,
         courses: null,
       },
-      () => this.getKhanTopics(subject),
+      () => {
+        get(SUBJECT_RESOURCES[SUBJECTS.indexOf(subject)])
+          .then(response =>
+            this.setState({
+              topics: response.data.children,
+            }),
+          )
+          .catch(error => console.log(error))
+      },
     )
   }
 
@@ -152,12 +134,12 @@ export default class App extends Component {
             <Subjects
               subjects={SUBJECTS}
               selectedSubject={this.state.selectedSubject}
-              onSelect={this.updateSubject}
+              onSelectSubject={this.selectSubject}
             />
             <Browser
               selectedSubject={this.state.selectedSubject}
               topics={this.state.topics}
-              onBrowse={this.browseKhan}
+              onSelectTopic={this.selectTopic}
               selectedTopic={this.state.selectedTopic}
               courses={this.state.courses}
               onAdd={this.addCourse}
@@ -234,7 +216,7 @@ const SubjectButton = styled.button`
   }
 `
 
-function Subjects({ subjects, onSelect, selectedSubject }) {
+function Subjects({ subjects, onSelectSubject, selectedSubject }) {
   return (
     <>
       {subjects.map((subject, index) => (
@@ -243,7 +225,7 @@ function Subjects({ subjects, onSelect, selectedSubject }) {
           key={index}
           selected={selectedSubject}
           item={subject}
-          onClick={() => onSelect(subject)}
+          onClick={() => onSelectSubject(subject)}
         >
           <span>{subject}</span>
         </SubjectButton>
