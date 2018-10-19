@@ -111,12 +111,7 @@ export default class App extends Component {
           curriculumList: curriculum,
         }
       },
-      () => {
-        localStorage.setItem(
-          'curriculumList',
-          JSON.stringify(this.state.curriculumList),
-        )
-      },
+      () => saveState(this.state.curriculumList),
     )
   }
 
