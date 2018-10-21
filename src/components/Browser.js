@@ -80,6 +80,14 @@ function Subjects({ subjects, onSelectSubject, selectedSubject }) {
   )
 }
 
+const TopicsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  border-bottom: 0.1em solid #4caf50;
+`
+
 const TopicsButton = styled.button`
   background: ${({ selected, item }) =>
     selected === item ? '#d1fad7' : '#fff'};
@@ -103,14 +111,6 @@ const TopicsButton = styled.button`
   }
 `
 
-const TopicsWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 2em;
-  border-bottom: 0.1em solid #4caf50;
-`
-
 function Topics({ topics, onSelectTopic, selectedTopic }) {
   return (
     <TopicsWrapper>
@@ -129,6 +129,14 @@ function Topics({ topics, onSelectTopic, selectedTopic }) {
     </TopicsWrapper>
   )
 }
+
+const CoursesWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  border-bottom: 0.1em solid #4caf50;
+`
 
 const CoursesButton = styled.button`
   background: #fff;
@@ -160,14 +168,6 @@ const CoursesButton = styled.button`
     transform: scale(1.2);
     background-color: #d1fad7;
   }
-`
-
-const CoursesWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 2em;
-  border-bottom: 0.1em solid #4caf50;
 `
 
 function Courses({ courses, addCourse }) {

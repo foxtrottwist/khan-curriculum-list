@@ -85,7 +85,7 @@ function Course({ courses, removeCourse }) {
               </a>
             </li>
             <li>
-              <button onClick={() => removeCourse(course)}>
+              <button type="button" onClick={() => removeCourse(course)}>
                 Remove course
               </button>
             </li>

@@ -23,7 +23,7 @@ const SUBJECT_RESOURCES = [
 ]
 
 const CurriculumWrapper = styled.div`
-  margin: 0 auto;
+  margin: 0 3rem;
   max-width: 1200px;
   margin-bottom: 20px;
   display: flex;
@@ -132,29 +132,23 @@ export default class App extends Component {
   }
 }
 
-// selectedSubject={this.state.selectedSubject}
-// topics={this.state.topics}
-// onSelectTopic={this.selectTopic}
-// selectedTopic={this.state.selectedTopic}
-// courses={this.state.courses}
-// onAdd={this.addCourse}
-
-const TitleHeader = styled.h4`
-  margin: 0.2rem;
-  color: #4caf50;
-`
-
 const TitleWrapper = styled.div`
   background-color: #fcfcfc;
   height: 1.75rem;
   border-bottom: 4px solid #d1fad7;
   padding: 0.4rem 0 0 0.5rem;
+
+  h4 {
+    font-weight: 400;
+    margin: 0.2rem;
+    color: #4caf50;
+  }
 `
 
 function Title() {
   return (
     <TitleWrapper>
-      <TitleHeader>Khan Curriculum List</TitleHeader>
+      <h4>Khan Curriculum List</h4>
     </TitleWrapper>
   )
 }
@@ -166,17 +160,18 @@ const HeaderWrapper = styled.header`
   color: #d1fad7;
   margin-bottom: 0.5%;
   box-shadow: 0px 1px 6px #ccc;
-`
 
-const HeaderHeading = styled.h2`
-  text-align: center;
-  margin-top: 2.5rem;
+  h1 {
+    font-weight: 400;
+    text-align: center;
+    margin-top: 2.5rem;
+  }
 `
 
 function Header() {
   return (
     <HeaderWrapper>
-      <HeaderHeading>What Would You Like to Learn Today?</HeaderHeading>
+      <h1>What Would You Like to Learn Today?</h1>
     </HeaderWrapper>
   )
 }
