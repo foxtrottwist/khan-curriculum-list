@@ -8,28 +8,21 @@ const BrowserWrapper = styled.div`
 
 export default function Browser(props) {
   const {
-    subjects,
-    onSelectSubject,
-    selectedSubject,
     topics,
     onSelectTopic,
     selectedTopic,
     courses,
     addCourse,
+    ...subjectProps
   } = props
 
   return (
     <BrowserWrapper>
-      <Subjects
-        subjects={subjects}
-        selectedSubject={selectedSubject}
-        onSelectSubject={onSelectSubject}
-      />
+      <Subjects {...subjectProps} />
       {!topics ? null : (
         <Topics
           topics={topics}
           selectedTopic={selectedTopic}
-          selectedSubject={selectedSubject} // selectedSubject passed to filter math topic results
           onSelectTopic={onSelectTopic}
         />
       )}
@@ -118,39 +111,7 @@ const TopicsWrapper = styled.div`
   border-bottom: 0.1em solid #4caf50;
 `
 
-function Topics({ selectedSubject, topics, onSelectTopic, selectedTopic }) {
-  if (selectedSubject === 'Math') {
-    return (
-      <TopicsWrapper>
-        {topics
-          .filter(title => {
-            const topic = title.standalone_title
-            return (
-              topic === '1st grade' ||
-              topic === '2nd grade' ||
-              topic === '3rd grade' ||
-              topic === '4th grade' ||
-              topic === '5th grade' ||
-              topic === '6th grade' ||
-              topic === '7th grade' ||
-              topic === '8th grade'
-            )
-          })
-          .map(topic => (
-            <TopicsButton
-              type="button"
-              height="4.5em"
-              key={topic.internal_id}
-              item={topic.node_slug}
-              selected={selectedTopic}
-              onClick={() => onSelectTopic(topic.node_slug)}
-            >
-              <p>{topic.standalone_title}</p>
-            </TopicsButton>
-          ))}
-      </TopicsWrapper>
-    )
-  }
+function Topics({ topics, onSelectTopic, selectedTopic }) {
   return (
     <TopicsWrapper>
       {topics.map(topic => (
