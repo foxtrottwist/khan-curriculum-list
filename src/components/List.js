@@ -6,24 +6,23 @@ const ListBox = styled.div`
   border: 0.1em solid #4caf50;
   margin-top: 1.5em;
   width: 25%;
-  max-height: 400px;
-  min-height: 400px;
-  heigth: 100%;
+  height: 400px;
   overflow: auto;
   padding: 0.3%;
-  border-radius: 2%;
+  border-radius: 1%;
   background-color: #fff;
   box-shadow: 2px 3px 6px #ccc;
-`
 
-const ListHeading = styled.h3`
-  text-align: center;
+  h3 {
+    text-align: center;
+    font-weight: 400;
+  }
 `
 
 export default function List({ curriculumList, removeCourse }) {
   return (
     <ListBox>
-      <ListHeading>Lesson Plan</ListHeading>
+      <h3>Lesson Plan</h3>
       {!curriculumList ? null : (
         <Course courses={curriculumList} removeCourse={removeCourse} />
       )}
@@ -35,30 +34,41 @@ const CourseListing = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-`
 
-const CourseItem = styled.li`
-  text-align: left;
-  margin-left: 5%;
-  margin-top: 3%;
-`
-
-const CourseAction = styled.li`
-  font-size: 0.9em;
-  cursor: pointer;
-  padding: 1%;
-
-  :hover {
-    color: #349046;
+  li {
+    text-align: left;
+    margin-left: 5%;
+    margin-top: 3%;
   }
-`
 
-const CourseLink = styled.a`
-  text-decoration: none;
-  color: #4caf50;
+  li ul li {
+    font-size: 0.9em;
+    padding: 1%;
 
-  :hover {
-    color: #349046;
+    a {
+      text-decoration: none;
+      color: #4caf50;
+
+      :hover {
+        color: #349046;
+      }
+    }
+
+    button {
+      background-color: #fff;
+      padding: 0;
+      border: none;
+      font-size: 1em;
+      color: #4caf50;
+      text-align: left;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+
+      :hover {
+        color: #349046;
+      }
+    }
   }
 `
 
@@ -66,23 +76,21 @@ function Course({ courses, removeCourse }) {
   return (
     <CourseListing>
       {courses.map(course => (
-        <CourseItem key={course.internal_id}>
+        <li key={course.internal_id}>
           {course.standalone_title}
-          <ul style={{ listStyle: 'none' }}>
-            <CourseAction>
-              <CourseLink
-                href={course.url}
-                rel="noreferrer noopener"
-                target="_blank"
-              >
+          <ul>
+            <li>
+              <a href={course.url} rel="noreferrer noopener" target="_blank">
                 Go to course &rarr;
-              </CourseLink>
-            </CourseAction>
-            <CourseAction onClick={() => removeCourse(course)}>
-              Remove course
-            </CourseAction>
+              </a>
+            </li>
+            <li>
+              <button onClick={() => removeCourse(course)}>
+                Remove course
+              </button>
+            </li>
           </ul>
-        </CourseItem>
+        </li>
       ))}
     </CourseListing>
   )
