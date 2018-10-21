@@ -20,12 +20,12 @@ const ListHeading = styled.h3`
   text-align: center;
 `
 
-export default function List({ curriculumList, onRemoval }) {
+export default function List({ curriculumList, removeCourse }) {
   return (
     <ListBox>
       <ListHeading>Lesson Plan</ListHeading>
       {!curriculumList ? null : (
-        <Course courses={curriculumList} onRemoval={onRemoval} />
+        <Course courses={curriculumList} removeCourse={removeCourse} />
       )}
     </ListBox>
   )
@@ -62,7 +62,7 @@ const CourseLink = styled.a`
   }
 `
 
-function Course({ courses, onRemoval }) {
+function Course({ courses, removeCourse }) {
   return (
     <CourseListing>
       {courses.map(course => (
@@ -78,7 +78,7 @@ function Course({ courses, onRemoval }) {
                 Go to course &rarr;
               </CourseLink>
             </CourseAction>
-            <CourseAction onClick={() => onRemoval(course)}>
+            <CourseAction onClick={() => removeCourse(course)}>
               Remove course
             </CourseAction>
           </ul>

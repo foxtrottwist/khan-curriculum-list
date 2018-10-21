@@ -8,16 +8,23 @@ const BrowserWrapper = styled.div`
 
 export default function Browser(props) {
   const {
+    subjects,
+    onSelectSubject,
     selectedSubject,
     topics,
     onSelectTopic,
     selectedTopic,
     courses,
-    onAdd,
+    addCourse,
   } = props
 
   return (
     <BrowserWrapper>
+      <Subjects
+        subjects={subjects}
+        selectedSubject={selectedSubject}
+        onSelectSubject={onSelectSubject}
+      />
       {!topics ? null : (
         <Topics
           topics={topics}
@@ -26,8 +33,57 @@ export default function Browser(props) {
           onSelectTopic={onSelectTopic}
         />
       )}
-      {!courses ? null : <Courses courses={courses} onAdd={onAdd} />}
+      {!courses ? null : <Courses courses={courses} addCourse={addCourse} />}
     </BrowserWrapper>
+  )
+}
+
+const SubjectWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2em;
+  border-bottom: 0.1em solid #4caf50;
+`
+
+const SubjectButton = styled.button`
+  background: ${({ selected, item }) =>
+    selected === item ? '#d1fad7' : '#fff'};
+  border: 0.2em solid #4caf50;
+  border-radius: 3px;
+  color: #4caf50;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9em;
+  cursor: pointer;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  height: ${props => (props.height ? props.height : '3.5em')};
+  width: 10em;
+  border-radius: 2%;
+  box-shadow: 1.5px 1.5px 6px #ccc;
+
+  span {
+    margin: auto;
+  }
+`
+
+function Subjects({ subjects, onSelectSubject, selectedSubject }) {
+  return (
+    <SubjectWrapper>
+      {subjects.map((subject, index) => (
+        <SubjectButton
+          type="button"
+          key={index}
+          selected={selectedSubject}
+          item={subject}
+          onClick={() => onSelectSubject(subject)}
+        >
+          <span>{subject}</span>
+        </SubjectButton>
+      ))}
+    </SubjectWrapper>
   )
 }
 
@@ -153,7 +209,7 @@ const CoursesWrapper = styled.div`
   border-bottom: 0.1em solid #4caf50;
 `
 
-function Courses({ courses, onAdd }) {
+function Courses({ courses, addCourse }) {
   return (
     <CoursesWrapper>
       {courses.map(course => (
@@ -161,7 +217,7 @@ function Courses({ courses, onAdd }) {
           type="button"
           height="5.5em"
           key={course.internal_id}
-          onClick={() => onAdd(course)}
+          onClick={() => addCourse(course)}
         >
           <span>{course.standalone_title}</span>
         </CoursesButton>

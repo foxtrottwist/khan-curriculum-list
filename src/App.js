@@ -29,13 +29,6 @@ const CurriculumWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `
-const BrowserBox = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  width: 50rem;
-  margin-bottom: 2em;
-`
 
 export default class App extends Component {
   state = {
@@ -46,7 +39,7 @@ export default class App extends Component {
     curriculumList: loadState(),
   }
 
-  selectTopic = topic => {
+  onSelectTopic = topic => {
     this.setState(
       {
         selectedTopic: topic,
@@ -64,14 +57,14 @@ export default class App extends Component {
     )
   }
 
-  selectSubject = subject => {
+  onSelectSubject = subject => {
     this.setState(
       {
         selectedSubject: subject,
         topics: null,
         courses: null,
       },
-      () => {
+      async () => {
         get(SUBJECT_RESOURCES[SUBJECTS.indexOf(subject)])
           .then(response =>
             this.setState({
@@ -116,35 +109,35 @@ export default class App extends Component {
   }
 
   render() {
+    const { curriculumList, ...rest } = this.state
     return (
       <>
         <Title />
         <Header />
         <CurriculumWrapper>
           <List
-            curriculumList={this.state.curriculumList}
-            onRemoval={this.removeCourse}
+            curriculumList={curriculumList}
+            removeCourse={this.removeCourse}
           />
-          <BrowserBox>
-            <Subjects
-              subjects={SUBJECTS}
-              selectedSubject={this.state.selectedSubject}
-              onSelectSubject={this.selectSubject}
-            />
-            <Browser
-              selectedSubject={this.state.selectedSubject}
-              topics={this.state.topics}
-              onSelectTopic={this.selectTopic}
-              selectedTopic={this.state.selectedTopic}
-              courses={this.state.courses}
-              onAdd={this.addCourse}
-            />
-          </BrowserBox>
+          <Browser
+            subjects={SUBJECTS}
+            onSelectSubject={this.onSelectSubject}
+            onSelectTopic={this.onSelectTopic}
+            addCourse={this.addCourse}
+            {...rest}
+          />
         </CurriculumWrapper>
       </>
     )
   }
 }
+
+// selectedSubject={this.state.selectedSubject}
+// topics={this.state.topics}
+// onSelectTopic={this.selectTopic}
+// selectedTopic={this.state.selectedTopic}
+// courses={this.state.courses}
+// onAdd={this.addCourse}
 
 const TitleHeader = styled.h4`
   margin: 0.2rem;
@@ -185,46 +178,5 @@ function Header() {
     <HeaderWrapper>
       <HeaderHeading>What Would You Like to Learn Today?</HeaderHeading>
     </HeaderWrapper>
-  )
-}
-
-const SubjectButton = styled.button`
-  background: ${({ selected, item }) =>
-    selected === item ? '#d1fad7' : '#fff'};
-  border: 0.2em solid #4caf50;
-  border-radius: 3px;
-  color: #4caf50;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 0.9em;
-  cursor: pointer;
-  margin: 0.5em;
-  padding: 0.25em 1em;
-  height: ${props => (props.height ? props.height : '3.5em')};
-  width: 10em;
-  border-radius: 2%;
-  box-shadow: 1.5px 1.5px 6px #ccc;
-
-  span {
-    margin: auto;
-  }
-`
-
-function Subjects({ subjects, onSelectSubject, selectedSubject }) {
-  return (
-    <>
-      {subjects.map((subject, index) => (
-        <SubjectButton
-          type="button"
-          key={index}
-          selected={selectedSubject}
-          item={subject}
-          onClick={() => onSelectSubject(subject)}
-        >
-          <span>{subject}</span>
-        </SubjectButton>
-      ))}
-    </>
   )
 }
