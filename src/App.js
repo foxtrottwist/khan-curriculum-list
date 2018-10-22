@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 
 import { loadState, saveState } from './services/storage'
@@ -30,12 +31,64 @@ const CurriculumWrapper = styled.div`
   justify-content: space-between;
 `
 
-export default class App extends Component {
+const ModalBox = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background: #fff;
+  border: 0.2em solid #4caf50;
+  border-radius: 1%;
+  box-shadow: 1.5px 1.5px 6px #ccc;
+`
+
+const ModalContent = styled.div`
+  display: flex;
+  align-items: center;
+  height: 20rem;
+  width: 40rem;
+  padding: 1rem;
+  overflow: auto;
+`
+
+const ModalButtonBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 20rem;
+  margin: auto;
+`
+const Button = styled.button`
+  background: #fff;
+  border: 0.2em solid #4caf50;
+  border-radius: 3px;
+  color: #4caf50;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9em;
+  cursor: pointer;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  height: ${props => (props.height ? props.height : '3.5em')};
+  width: 10em;
+  border-radius: 2%;
+  box-shadow: 1.5px 1.5px 6px #ccc;
+
+  :active {
+    transform: scale(1.2);
+    background-color: #d1fad7;
+  }
+`
+
+export default class App extends React.Component {
   state = {
     selectedSubject: '',
     topics: null,
     selectedTopic: '',
     courses: null,
+    selectedCourse: null,
+    isOpen: false,
     curriculumList: loadState(),
   }
 
@@ -76,15 +129,34 @@ export default class App extends Component {
     )
   }
 
+  modalRef = React.createRef()
+
+  onSelectCourse = course => {
+    this.setState(
+      ({ isOpen }) => ({ selectedCourse: course, isOpen: !isOpen }),
+      () => this.modalRef.current.focus(),
+    )
+  }
+
+  handleOutsideClick = ({ target }) => {
+    if (this.state.isOpen && !this.modalRef.current.contains(target)) {
+      this.setState(({ isOpen }) => ({ isOpen: !isOpen }))
+    }
+  }
+
+  handleClose = () =>
+    this.setState(({ isOpen }) => ({ isOpen: !isOpen, selectedCourse: null }))
+
   addCourse = course => {
     this.setState(
-      ({ curriculumList }) => {
+      ({ curriculumList, isOpen }) => {
         const curriculum = !curriculumList
           ? [course]
           : [...new Set([...curriculumList, course])] // Array deduplication
         return {
-          selectedCourse: course.standalone_title,
           curriculumList: curriculum,
+          isOpen: !isOpen,
+          selectedCourse: null,
         }
       },
       () => {
@@ -109,7 +181,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { curriculumList, ...rest } = this.state
+    const { curriculumList, isOpen, selectedCourse, ...rest } = this.state
     return (
       <>
         <Title />
@@ -123,10 +195,41 @@ export default class App extends Component {
             subjects={SUBJECTS}
             onSelectSubject={this.onSelectSubject}
             onSelectTopic={this.onSelectTopic}
-            addCourse={this.addCourse}
+            addCourse={this.onSelectCourse}
             {...rest}
           />
         </CurriculumWrapper>
+        {isOpen ? (
+          <Modal handleOutsideClick={this.handleOutsideClick}>
+            {() => {
+              const { title, description, icon } = selectedCourse
+              return (
+                <ModalBox ref={this.modalRef}>
+                  <ModalContent>
+                    <div>
+                      <img alt="course icon" src={icon} />
+                    </div>
+                    <div>
+                      <h4>{title}</h4>
+                      <p>{description}</p>
+                    </div>
+                  </ModalContent>
+                  <ModalButtonBox>
+                    <Button
+                      type="button"
+                      onClick={() => this.addCourse(selectedCourse)}
+                    >
+                      Add
+                    </Button>
+                    <Button type="button" onClick={this.handleClose}>
+                      Cancel
+                    </Button>
+                  </ModalButtonBox>
+                </ModalBox>
+              )
+            }}
+          </Modal>
+        ) : null}
       </>
     )
   }
@@ -174,4 +277,28 @@ function Header() {
       <h1>What Would You Like to Learn Today?</h1>
     </HeaderWrapper>
   )
+}
+
+const modalRoot = document.getElementById('modal-root')
+
+class Modal extends React.Component {
+  element = document.createElement('div')
+
+  handleModalEvent = event => {
+    this.props.handleOutsideClick(event)
+  }
+
+  componentDidMount() {
+    modalRoot.appendChild(this.element)
+    document.addEventListener('click', this.handleModalEvent)
+  }
+
+  componentWillUnmount() {
+    modalRoot.removeChild(this.element)
+    document.removeEventListener('click', this.handleModalEvent)
+  }
+
+  render() {
+    return ReactDOM.createPortal(this.props.children(), this.element)
+  }
 }
